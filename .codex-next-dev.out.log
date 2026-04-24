@@ -1,0 +1,80 @@
+
+> grizzly-estimator@0.1.0 dev
+> next dev --port 3055
+
+▲ Next.js 16.2.4 (Turbopack)
+- Local:         http://localhost:3055
+- Network:       http://169.254.83.107:3055
+- Environments: .env.local
+✓ Ready in 893ms
+
+[auth/login] Attempt {
+  email: 'carterbarns@grizzlyelectrical.net',
+  nextPath: '/',
+  expectsJson: true
+}
+[session-store] Session created {
+  email: 'carterbarns@grizzlyelectrical.net',
+  sessionId: '39613bb5-7685-4843-bbc7-e59f79c4ea05'
+}
+[auth/login] Success { email: 'carterbarns@grizzlyelectrical.net', redirectTo: '/' }
+ POST /api/auth/login 200 in 859ms (next.js: 229ms, application-code: 630ms)
+[notifications] Sending webhook to Zapier {
+  projectId: 'project-zapier-smoke-1776825435381',
+  type: 'owner_approval',
+  payload: {
+    projectId: 'project-zapier-smoke-1776825435381',
+    customerName: 'Smoke Test Customer',
+    customerEmail: 'smoke@example.com',
+    customerPhone: '469-555-0100',
+    estimateTotal: 298,
+    approvalLink: 'http://localhost:3055/?projectId=project-zapier-smoke-1776825435381',
+    type: 'owner_approval',
+    projectName: 'Zapier notification smoke test',
+    proposalSummary: 'Scope organized by 1 work areas for clean review. 1 mapped line items with price-book-first matching.'
+  }
+}
+ POST /api/analyze 200 in 603ms (next.js: 70ms, application-code: 534ms)
+[notifications] Zapier callback received {
+  projectId: 'project-zapier-smoke-1776825435381',
+  type: 'owner_approval',
+  status: 'sent',
+  message: 'Owner alert sent from smoke test.'
+}
+[zapier-callback] Callback applied {
+  projectId: 'project-zapier-smoke-1776825435381',
+  type: 'owner_approval',
+  status: 'sent',
+  message: 'Owner alert sent from smoke test.'
+}
+ POST /api/zapier/callback 200 in 657ms (next.js: 470ms, application-code: 187ms)
+[notifications] Sending webhook to Zapier {
+  projectId: 'project-zapier-smoke-1776825435381',
+  type: 'customer_send',
+  payload: {
+    projectId: 'project-zapier-smoke-1776825435381',
+    customerName: 'Smoke Test Customer',
+    customerEmail: 'smoke@example.com',
+    customerPhone: '469-555-0100',
+    estimateTotal: 298,
+    approvalLink: 'http://localhost:3055/proposal/project-zapier-smoke-1776825435381?style=hcp&token=eyJwcm9qZWN0SWQiOiJwcm9qZWN0LXphcGllci1zbW9rZS0xNzc2ODI1NDM1MzgxIiwic3R5bGUiOiJoY3AiLCJleHAiOjE3NzgwMzUwMzY5OTh9.xfKoky7Il0J2D6y9lIaYzvuNQT6zoUXydzZSM0YeG_4',
+    type: 'customer_send',
+    projectName: 'Zapier notification smoke test',
+    proposalSummary: 'Scope organized by 1 work areas for clean review. 1 mapped line items with price-book-first matching.'
+  }
+}
+ POST /api/proposals/send 200 in 575ms (next.js: 49ms, application-code: 526ms)
+[notifications] Zapier callback received {
+  projectId: 'project-zapier-smoke-1776825435381',
+  type: 'customer_send',
+  status: 'sent',
+  message: 'Customer notification sent from smoke test.'
+}
+[zapier-callback] Callback applied {
+  projectId: 'project-zapier-smoke-1776825435381',
+  type: 'customer_send',
+  status: 'sent',
+  message: 'Customer notification sent from smoke test.'
+}
+ POST /api/zapier/callback 200 in 211ms (next.js: 8ms, application-code: 204ms)
+ GET /api/projects 200 in 605ms (next.js: 225ms, application-code: 381ms)

@@ -1,0 +1,951 @@
+[
+  {
+    "id": "lakewood-patio-receptacles",
+    "title": "Back patio receptacle add with outdoor GFCI protection",
+    "customer": {
+      "name": "Lakewood Patio Residence",
+      "email": "patio@example.com",
+      "phone": "(214) 555-0146",
+      "address": "412 Lakewood Drive, Dallas, TX"
+    },
+    "propertyType": "single_family",
+    "projectType": "residential",
+    "projectSubtype": "receptacle_add",
+    "scopeDescription": "Add two outdoor receptacles near the smoker station and replace one weathered device by the patio door.",
+    "blueprintIncluded": false,
+    "notes": [
+      "Customer wants weather-resistant devices and covers.",
+      "Keep trenching off this quote unless hidden damage is found."
+    ],
+    "attachments": [
+      {
+        "id": "lakewood-video",
+        "kind": "video",
+        "name": "lakewood-patio-walkthrough.mov",
+        "sizeLabel": "128 MB",
+        "uploadStatus": "complete",
+        "progress": 100
+      },
+      {
+        "id": "lakewood-note",
+        "kind": "note",
+        "name": "Customer note summary",
+        "sizeLabel": "2 KB",
+        "uploadStatus": "complete",
+        "progress": 100
+      }
+    ],
+    "transcriptSegments": [
+      {
+        "id": "lakewood-seg-1",
+        "speaker": "Estimator",
+        "timestamp": "00:08",
+        "text": "We need one new GFCI on the left wall by the smoker and another by the patio table."
+      },
+      {
+        "id": "lakewood-seg-2",
+        "speaker": "Estimator",
+        "timestamp": "00:27",
+        "text": "The existing device at the back door looks weathered, so I want that replaced while we are here."
+      }
+    ],
+    "requestedActions": [
+      {
+        "id": "patio-gfci",
+        "area": "Patio",
+        "label": "Add new receptacle",
+        "quantity": 2,
+        "keywords": [
+          "Add New Receptacle",
+          "Replace GFCI Receptacle"
+        ]
+      },
+      {
+        "id": "back-door-device",
+        "area": "Patio Door",
+        "label": "Replace weathered device",
+        "quantity": 1,
+        "keywords": [
+          "Replace Switch / Receptacle",
+          "Replace GFCI Receptacle"
+        ]
+      }
+    ],
+    "createdAt": "2026-04-20T02:58:42.744Z",
+    "estimateDraft": {
+      "areaGroups": [
+        {
+          "area": "Patio",
+          "lineItems": [
+            {
+              "id": "lakewood-patio-receptacles-patio-add-new-receptacle",
+              "area": "Patio",
+              "name": " Replace GFCI Receptacle",
+              "description": "Replace non-working GFCI with new GFCI. Includes new in-use cover for outdoor applications.",
+              "quantity": 2,
+              "unit": "Each",
+              "materialCost": 44,
+              "sellPrice": 298,
+              "laborHours": 2.4,
+              "confidence": 0.89,
+              "status": "best_guess",
+              "source": "price_book"
+            }
+          ],
+          "subtotal": 298,
+          "totalLaborHours": 2.4
+        },
+        {
+          "area": "Patio Door",
+          "lineItems": [
+            {
+              "id": "lakewood-patio-receptacles-patio-door-replace-weathered-device",
+              "area": "Patio Door",
+              "name": "Replace Switch / Receptacle",
+              "description": "Remove current switch and/or receptacle and replace with new switch/ receptacle and face plate. Does not include dimmers.",
+              "quantity": 1,
+              "unit": "Each",
+              "materialCost": 0,
+              "sellPrice": 79,
+              "laborHours": 1.2,
+              "confidence": 0.89,
+              "status": "best_guess",
+              "source": "price_book"
+            }
+          ],
+          "subtotal": 79,
+          "totalLaborHours": 1.2
+        }
+      ],
+      "lineItems": [
+        {
+          "id": "lakewood-patio-receptacles-patio-add-new-receptacle",
+          "area": "Patio",
+          "name": " Replace GFCI Receptacle",
+          "description": "Replace non-working GFCI with new GFCI. Includes new in-use cover for outdoor applications.",
+          "quantity": 2,
+          "unit": "Each",
+          "materialCost": 44,
+          "sellPrice": 298,
+          "laborHours": 2.4,
+          "confidence": 0.89,
+          "status": "best_guess",
+          "source": "price_book"
+        },
+        {
+          "id": "lakewood-patio-receptacles-patio-door-replace-weathered-device",
+          "area": "Patio Door",
+          "name": "Replace Switch / Receptacle",
+          "description": "Remove current switch and/or receptacle and replace with new switch/ receptacle and face plate. Does not include dimmers.",
+          "quantity": 1,
+          "unit": "Each",
+          "materialCost": 0,
+          "sellPrice": 79,
+          "laborHours": 1.2,
+          "confidence": 0.89,
+          "status": "best_guess",
+          "source": "price_book"
+        }
+      ],
+      "materialTotal": 44,
+      "totalLaborHours": 3.6,
+      "laborRate": 118,
+      "grandTotal": 377,
+      "averageConfidence": 0.89,
+      "reviewStatus": "ready_for_owner_review"
+    },
+    "proposalVariants": [
+      {
+        "style": "hcp",
+        "title": "Lakewood Patio Residence electrical proposal",
+        "intro": "This Housecall Pro style proposal keeps the language tight and operational so your customer can approve the work quickly from any device.",
+        "bulletHighlights": [
+          "Scope organized by 2 work areas for clean review.",
+          "2 mapped line items with price-book-first matching.",
+          "No deposit required for this job. Approval can proceed directly inside Housecall Pro."
+        ],
+        "depositRequired": false,
+        "depositAmount": 0,
+        "sharePath": "/proposal/lakewood-patio-receptacles?style=hcp"
+      },
+      {
+        "style": "premium",
+        "title": "Lakewood Patio Residence scope of work and investment",
+        "intro": "This premium version uses more customer-facing language and frames the work around cleanliness, coordination, and the finished outcome.",
+        "bulletHighlights": [
+          "Walkthrough findings combined with field-only review to draft the estimate.",
+          "Labor modeled at 118/hr with AI-assisted takeoff and owner review gates.",
+          "After approval, the workflow is ready to hand off to Housecall Pro for scheduling and customer communication."
+        ],
+        "depositRequired": false,
+        "depositAmount": 0,
+        "sharePath": "/proposal/lakewood-patio-receptacles?style=premium"
+      }
+    ],
+    "integrationSyncs": [
+      {
+        "system": "housecall-pro",
+        "status": "ready",
+        "message": "Customer and job data are ready to match or create inside Housecall Pro when the owner approves the proposal.",
+        "updatedAt": "2026-04-20T02:58:42.744Z"
+      },
+      {
+        "system": "supplier-email",
+        "status": "queued",
+        "message": "Supplier email stays queued until approval and deposit conditions are satisfied.",
+        "updatedAt": "2026-04-20T02:58:42.744Z"
+      },
+      {
+        "system": "home-depot-cart",
+        "status": "queued",
+        "message": "Retail cart generation is queued until approval so the team only buys against a won job.",
+        "updatedAt": "2026-04-20T02:58:42.744Z"
+      }
+    ],
+    "capturePrompts": [],
+    "analysisSummary": [
+      "Drafted 2 estimate line items across 2 areas from walkthrough scope and optional notes.",
+      "2 items matched your price book first; unmatched items stayed marked as AI fallback.",
+      "No blueprint was required for this draft, so confidence depends more heavily on walkthrough detail and review.",
+      "This draft is clean enough for owner review without additional capture prompts."
+    ],
+    "opsNextSteps": [
+      "Owner reviews quantities, match quality, and any flagged confidence issues.",
+      "Send the selected proposal variant and route customer approval through Housecall Pro.",
+      "Queue supply-house email and Home Depot cart build after approval.",
+      "Dispatch through Housecall Pro once scope, dates, and crew notes are final."
+    ]
+  },
+  {
+    "id": "wilson-kitchen-remodel",
+    "title": "Kitchen + living room remodel rough-in and finish",
+    "customer": {
+      "name": "Wilson Remodel",
+      "email": "wilson@example.com",
+      "phone": "(469) 555-0194",
+      "address": "1038 Berkshire Lane, Frisco, TX"
+    },
+    "propertyType": "single_family",
+    "projectType": "residential",
+    "projectSubtype": "full_remodel",
+    "scopeDescription": "Full kitchen remodel with new island receptacles, under-cabinet lighting prep, living room wafer lights, and one updated fan install.",
+    "blueprintIncluded": true,
+    "notes": [
+      "Cabinet plan available from designer.",
+      "Homeowner wants clean, customer-friendly proposal language."
+    ],
+    "attachments": [
+      {
+        "id": "wilson-video",
+        "kind": "video",
+        "name": "wilson-remodel-walkthrough.mov",
+        "sizeLabel": "402 MB",
+        "uploadStatus": "complete",
+        "progress": 100
+      },
+      {
+        "id": "wilson-blueprint",
+        "kind": "blueprint",
+        "name": "kitchen-revision-b.pdf",
+        "sizeLabel": "11 MB",
+        "uploadStatus": "complete",
+        "progress": 100
+      }
+    ],
+    "transcriptSegments": [
+      {
+        "id": "wilson-seg-1",
+        "speaker": "Estimator",
+        "timestamp": "00:14",
+        "text": "New island gets two pop-up receptacles, then we are adding six wafers in the living room and dining zone."
+      },
+      {
+        "id": "wilson-seg-2",
+        "speaker": "Estimator",
+        "timestamp": "00:31",
+        "text": "Existing fan comes down and the new owner provided fan goes back up in the same location."
+      }
+    ],
+    "requestedActions": [
+      {
+        "id": "island-receptacles",
+        "area": "Kitchen",
+        "label": "Add island receptacles",
+        "quantity": 3,
+        "keywords": [
+          "Add New Receptacle",
+          "Replace Switch / Receptacle"
+        ]
+      },
+      {
+        "id": "living-wafer-lights",
+        "area": "Living Room",
+        "label": "Install new wafer lights",
+        "quantity": 8,
+        "needsMeasurement": true,
+        "keywords": [
+          "Install New LED Slim Can Light",
+          "Add New Switch and Fixture"
+        ]
+      },
+      {
+        "id": "dining-fixture-switch",
+        "area": "Dining",
+        "label": "Add fixture switchleg",
+        "quantity": 1,
+        "keywords": [
+          "Add New Switch and Fixture",
+          "Replace Light Fixture"
+        ]
+      },
+      {
+        "id": "fan-reinstall",
+        "area": "Primary Bedroom",
+        "label": "Replace ceiling fan",
+        "quantity": 1,
+        "ownerProvided": true,
+        "keywords": [
+          "Ceiling Fan"
+        ]
+      }
+    ],
+    "createdAt": "2026-04-20T02:58:42.750Z",
+    "estimateDraft": {
+      "areaGroups": [
+        {
+          "area": "Kitchen",
+          "lineItems": [
+            {
+              "id": "wilson-kitchen-remodel-kitchen-add-island-receptacles",
+              "area": "Kitchen",
+              "name": "Replace Switch / Receptacle",
+              "description": "Remove current switch and/or receptacle and replace with new switch/ receptacle and face plate. Does not include dimmers.",
+              "quantity": 3,
+              "unit": "Each",
+              "materialCost": 0,
+              "sellPrice": 237,
+              "laborHours": 7.2,
+              "confidence": 0.96,
+              "status": "best_guess",
+              "source": "price_book"
+            }
+          ],
+          "subtotal": 237,
+          "totalLaborHours": 7.2
+        },
+        {
+          "area": "Living Room",
+          "lineItems": [
+            {
+              "id": "wilson-kitchen-remodel-living-room-install-new-wafer-lights",
+              "area": "Living Room",
+              "name": "Install New LED Slim Can Light (Open Access)",
+              "description": "Installing new light fixture in new location. Includes running up to 15' of wire to add to existing lighting switchleg. Includes 6\" LED slim can light. ",
+              "quantity": 8,
+              "unit": "Each",
+              "materialCost": 320,
+              "sellPrice": 1032,
+              "laborHours": 19.2,
+              "confidence": 0.91,
+              "status": "best_guess",
+              "source": "price_book"
+            }
+          ],
+          "subtotal": 1032,
+          "totalLaborHours": 19.2
+        },
+        {
+          "area": "Dining",
+          "lineItems": [
+            {
+              "id": "wilson-kitchen-remodel-dining-add-fixture-switchleg",
+              "area": "Dining",
+              "name": "Replace Light Fixture (owner provided fixture)",
+              "description": "Removal of old fixture and installation of new owner purchased light fixture.",
+              "quantity": 1,
+              "unit": "Each",
+              "materialCost": 0,
+              "sellPrice": 119,
+              "laborHours": 2.4,
+              "confidence": 0.96,
+              "status": "best_guess",
+              "source": "price_book"
+            }
+          ],
+          "subtotal": 119,
+          "totalLaborHours": 2.4
+        },
+        {
+          "area": "Primary Bedroom",
+          "lineItems": [
+            {
+              "id": "wilson-kitchen-remodel-primary-bedroom-replace-ceiling-fan",
+              "area": "Primary Bedroom",
+              "name": "Ceiling Fan (up to 12' ceiling)",
+              "description": "Demo and removal of existing ceiling fan. Installation of new owner purchased ceiling fan in same location. Up to 12' ceilings",
+              "quantity": 1,
+              "unit": "Each",
+              "materialCost": 0,
+              "sellPrice": 199,
+              "laborHours": 2.1,
+              "confidence": 0.94,
+              "status": "best_guess",
+              "source": "price_book"
+            }
+          ],
+          "subtotal": 199,
+          "totalLaborHours": 2.1
+        }
+      ],
+      "lineItems": [
+        {
+          "id": "wilson-kitchen-remodel-kitchen-add-island-receptacles",
+          "area": "Kitchen",
+          "name": "Replace Switch / Receptacle",
+          "description": "Remove current switch and/or receptacle and replace with new switch/ receptacle and face plate. Does not include dimmers.",
+          "quantity": 3,
+          "unit": "Each",
+          "materialCost": 0,
+          "sellPrice": 237,
+          "laborHours": 7.2,
+          "confidence": 0.96,
+          "status": "best_guess",
+          "source": "price_book"
+        },
+        {
+          "id": "wilson-kitchen-remodel-living-room-install-new-wafer-lights",
+          "area": "Living Room",
+          "name": "Install New LED Slim Can Light (Open Access)",
+          "description": "Installing new light fixture in new location. Includes running up to 15' of wire to add to existing lighting switchleg. Includes 6\" LED slim can light. ",
+          "quantity": 8,
+          "unit": "Each",
+          "materialCost": 320,
+          "sellPrice": 1032,
+          "laborHours": 19.2,
+          "confidence": 0.91,
+          "status": "best_guess",
+          "source": "price_book"
+        },
+        {
+          "id": "wilson-kitchen-remodel-dining-add-fixture-switchleg",
+          "area": "Dining",
+          "name": "Replace Light Fixture (owner provided fixture)",
+          "description": "Removal of old fixture and installation of new owner purchased light fixture.",
+          "quantity": 1,
+          "unit": "Each",
+          "materialCost": 0,
+          "sellPrice": 119,
+          "laborHours": 2.4,
+          "confidence": 0.96,
+          "status": "best_guess",
+          "source": "price_book"
+        },
+        {
+          "id": "wilson-kitchen-remodel-primary-bedroom-replace-ceiling-fan",
+          "area": "Primary Bedroom",
+          "name": "Ceiling Fan (up to 12' ceiling)",
+          "description": "Demo and removal of existing ceiling fan. Installation of new owner purchased ceiling fan in same location. Up to 12' ceilings",
+          "quantity": 1,
+          "unit": "Each",
+          "materialCost": 0,
+          "sellPrice": 199,
+          "laborHours": 2.1,
+          "confidence": 0.94,
+          "status": "best_guess",
+          "source": "price_book"
+        }
+      ],
+      "materialTotal": 320,
+      "totalLaborHours": 30.9,
+      "laborRate": 118,
+      "grandTotal": 1587,
+      "averageConfidence": 0.94,
+      "reviewStatus": "ready_for_owner_review"
+    },
+    "proposalVariants": [
+      {
+        "style": "hcp",
+        "title": "Wilson Remodel electrical proposal",
+        "intro": "This Housecall Pro style proposal keeps the language tight and operational so your customer can approve the work quickly from any device.",
+        "bulletHighlights": [
+          "Scope organized by 4 work areas for clean review.",
+          "4 mapped line items with price-book-first matching.",
+          "Route approval through Housecall Pro with conditional deposit collection."
+        ],
+        "depositRequired": true,
+        "depositAmount": 397,
+        "sharePath": "/proposal/wilson-kitchen-remodel?style=hcp"
+      },
+      {
+        "style": "premium",
+        "title": "Wilson Remodel scope of work and investment",
+        "intro": "This premium version uses more customer-facing language and frames the work around cleanliness, coordination, and the finished outcome.",
+        "bulletHighlights": [
+          "Walkthrough findings combined with blueprint review to draft the estimate.",
+          "Labor modeled at 118/hr with AI-assisted takeoff and owner review gates.",
+          "After approval, the workflow is ready to hand off to Housecall Pro for scheduling and customer communication."
+        ],
+        "depositRequired": true,
+        "depositAmount": 397,
+        "sharePath": "/proposal/wilson-kitchen-remodel?style=premium"
+      }
+    ],
+    "integrationSyncs": [
+      {
+        "system": "housecall-pro",
+        "status": "ready",
+        "message": "Customer and job data are ready to match or create inside Housecall Pro when the owner approves the proposal.",
+        "updatedAt": "2026-04-20T02:58:42.750Z"
+      },
+      {
+        "system": "supplier-email",
+        "status": "queued",
+        "message": "Supplier email stays queued until approval and deposit conditions are satisfied.",
+        "updatedAt": "2026-04-20T02:58:42.750Z"
+      },
+      {
+        "system": "home-depot-cart",
+        "status": "queued",
+        "message": "Retail cart generation is queued until approval so the team only buys against a won job.",
+        "updatedAt": "2026-04-20T02:58:42.750Z"
+      }
+    ],
+    "capturePrompts": [],
+    "analysisSummary": [
+      "Drafted 4 estimate line items across 4 areas from walkthrough scope and optional notes.",
+      "4 items matched your price book first; unmatched items stayed marked as AI fallback.",
+      "Blueprint context boosted confidence and reduced manual clarification where available.",
+      "This draft is clean enough for owner review without additional capture prompts."
+    ],
+    "opsNextSteps": [
+      "Owner reviews quantities, match quality, and any flagged confidence issues.",
+      "Send the selected proposal variant and route customer approval through Housecall Pro.",
+      "If approved, collect a conditional deposit through Housecall Pro before material release.",
+      "Queue supply-house email and Home Depot cart build after approval.",
+      "Dispatch through Housecall Pro once scope, dates, and crew notes are final."
+    ]
+  },
+  {
+    "id": "midtown-office-lighting",
+    "title": "Tenant office lighting refresh and controls cleanup",
+    "customer": {
+      "name": "Midtown Advisory Office",
+      "email": "office@example.com",
+      "phone": "(972) 555-0102",
+      "address": "1912 Commerce Street, Dallas, TX",
+      "company": "Midtown Advisory"
+    },
+    "propertyType": "office",
+    "projectType": "commercial",
+    "projectSubtype": "lighting_install",
+    "scopeDescription": "Replace recessed fixtures with downlights, add a switched fixture in the conference room, and confirm spacing from reflected ceiling plan.",
+    "blueprintIncluded": true,
+    "notes": [
+      "Office manager expects alternate schedule options after approval."
+    ],
+    "attachments": [
+      {
+        "id": "midtown-video",
+        "kind": "video",
+        "name": "midtown-office.mov",
+        "sizeLabel": "266 MB",
+        "uploadStatus": "complete",
+        "progress": 100
+      },
+      {
+        "id": "midtown-blueprint",
+        "kind": "blueprint",
+        "name": "lighting-plan.pdf",
+        "sizeLabel": "6 MB",
+        "uploadStatus": "complete",
+        "progress": 100
+      }
+    ],
+    "transcriptSegments": [
+      {
+        "id": "midtown-seg-1",
+        "speaker": "Estimator",
+        "timestamp": "00:11",
+        "text": "We have six existing cans in the open office and need to verify spacing before switching everything to wafers."
+      },
+      {
+        "id": "midtown-seg-2",
+        "speaker": "Estimator",
+        "timestamp": "00:38",
+        "text": "Conference room gets one new switched fixture with an added switchleg from existing power."
+      }
+    ],
+    "requestedActions": [
+      {
+        "id": "office-downlights",
+        "area": "Open Office",
+        "label": "Replace recessed lighting with downlights",
+        "quantity": 6,
+        "needsMeasurement": true,
+        "keywords": [
+          "Replace Recessed Lighting",
+          "Install New LED Slim Can Light"
+        ]
+      },
+      {
+        "id": "conference-switchleg",
+        "area": "Conference Room",
+        "label": "Add switch and fixture",
+        "quantity": 1,
+        "needsMeasurement": true,
+        "keywords": [
+          "Add New Switch and Fixture",
+          "Replace Light Fixture"
+        ]
+      }
+    ],
+    "createdAt": "2026-04-20T02:58:42.755Z",
+    "estimateDraft": {
+      "areaGroups": [
+        {
+          "area": "Open Office",
+          "lineItems": [
+            {
+              "id": "midtown-office-lighting-open-office-replace-recessed-lighting-with-downlights",
+              "area": "Open Office",
+              "name": "Replace Recessed Lighting with Slim Downlights ",
+              "description": "Remove and replace old recessed light fixture and install new LED wafer light (retrofit or pop-in). Includes LED fixture and labor to install fixture.",
+              "quantity": 6,
+              "unit": "Each",
+              "materialCost": 0,
+              "sellPrice": 654,
+              "laborHours": 8.6,
+              "confidence": 0.76,
+              "status": "verified",
+              "source": "price_book"
+            }
+          ],
+          "subtotal": 654,
+          "totalLaborHours": 8.6
+        },
+        {
+          "area": "Conference Room",
+          "lineItems": [
+            {
+              "id": "midtown-office-lighting-conference-room-add-switch-and-fixture",
+              "area": "Conference Room",
+              "name": "Replace Light Fixture (owner provided fixture)",
+              "description": "Removal of old fixture and installation of new owner purchased light fixture.",
+              "quantity": 1,
+              "unit": "Each",
+              "materialCost": 0,
+              "sellPrice": 119,
+              "laborHours": 1.4,
+              "confidence": 0.79,
+              "status": "verified",
+              "source": "price_book"
+            }
+          ],
+          "subtotal": 119,
+          "totalLaborHours": 1.4
+        }
+      ],
+      "lineItems": [
+        {
+          "id": "midtown-office-lighting-open-office-replace-recessed-lighting-with-downlights",
+          "area": "Open Office",
+          "name": "Replace Recessed Lighting with Slim Downlights ",
+          "description": "Remove and replace old recessed light fixture and install new LED wafer light (retrofit or pop-in). Includes LED fixture and labor to install fixture.",
+          "quantity": 6,
+          "unit": "Each",
+          "materialCost": 0,
+          "sellPrice": 654,
+          "laborHours": 8.6,
+          "confidence": 0.76,
+          "status": "verified",
+          "source": "price_book"
+        },
+        {
+          "id": "midtown-office-lighting-conference-room-add-switch-and-fixture",
+          "area": "Conference Room",
+          "name": "Replace Light Fixture (owner provided fixture)",
+          "description": "Removal of old fixture and installation of new owner purchased light fixture.",
+          "quantity": 1,
+          "unit": "Each",
+          "materialCost": 0,
+          "sellPrice": 119,
+          "laborHours": 1.4,
+          "confidence": 0.79,
+          "status": "verified",
+          "source": "price_book"
+        }
+      ],
+      "materialTotal": 0,
+      "totalLaborHours": 10,
+      "laborRate": 118,
+      "grandTotal": 773,
+      "averageConfidence": 0.78,
+      "reviewStatus": "ready_for_owner_review"
+    },
+    "proposalVariants": [
+      {
+        "style": "hcp",
+        "title": "Midtown Advisory Office electrical proposal",
+        "intro": "This Housecall Pro style proposal keeps the language tight and operational so your customer can approve the work quickly from any device.",
+        "bulletHighlights": [
+          "Scope organized by 2 work areas for clean review.",
+          "2 mapped line items with price-book-first matching.",
+          "No deposit required for this job. Approval can proceed directly inside Housecall Pro."
+        ],
+        "depositRequired": false,
+        "depositAmount": 0,
+        "sharePath": "/proposal/midtown-office-lighting?style=hcp"
+      },
+      {
+        "style": "premium",
+        "title": "Midtown Advisory Office scope of work and investment",
+        "intro": "This premium version uses more customer-facing language and frames the work around cleanliness, coordination, and the finished outcome.",
+        "bulletHighlights": [
+          "Walkthrough findings combined with blueprint review to draft the estimate.",
+          "Labor modeled at 118/hr with AI-assisted takeoff and owner review gates.",
+          "After approval, the workflow is ready to hand off to Housecall Pro for scheduling and customer communication."
+        ],
+        "depositRequired": false,
+        "depositAmount": 0,
+        "sharePath": "/proposal/midtown-office-lighting?style=premium"
+      }
+    ],
+    "integrationSyncs": [
+      {
+        "system": "housecall-pro",
+        "status": "ready",
+        "message": "Customer and job data are ready to match or create inside Housecall Pro when the owner approves the proposal.",
+        "updatedAt": "2026-04-20T02:58:42.755Z"
+      },
+      {
+        "system": "supplier-email",
+        "status": "queued",
+        "message": "Supplier email stays queued until approval and deposit conditions are satisfied.",
+        "updatedAt": "2026-04-20T02:58:42.755Z"
+      },
+      {
+        "system": "home-depot-cart",
+        "status": "queued",
+        "message": "Retail cart generation is queued until approval so the team only buys against a won job.",
+        "updatedAt": "2026-04-20T02:58:42.755Z"
+      }
+    ],
+    "capturePrompts": [
+      {
+        "id": "office-downlights-measurement",
+        "area": "Open Office",
+        "question": "Confirm field dimensions in Open Office",
+        "context": "Commercial walkthroughs prompt for fixture spacing, run length, or mounting heights when measurements are unclear. The estimator can dismiss and keep the best-guess draft.",
+        "severity": "warning",
+        "dismissible": true
+      },
+      {
+        "id": "conference-switchleg-measurement",
+        "area": "Conference Room",
+        "question": "Confirm field dimensions in Conference Room",
+        "context": "Commercial walkthroughs prompt for fixture spacing, run length, or mounting heights when measurements are unclear. The estimator can dismiss and keep the best-guess draft.",
+        "severity": "warning",
+        "dismissible": true
+      }
+    ],
+    "analysisSummary": [
+      "Drafted 2 estimate line items across 2 areas from walkthrough scope and optional notes.",
+      "2 items matched your price book first; unmatched items stayed marked as AI fallback.",
+      "Blueprint context boosted confidence and reduced manual clarification where available.",
+      "2 clarification prompts are ready for capture or owner review before final send."
+    ],
+    "opsNextSteps": [
+      "Owner reviews quantities, match quality, and any flagged confidence issues.",
+      "Send the selected proposal variant and route customer approval through Housecall Pro.",
+      "Queue supply-house email and Home Depot cart build after approval.",
+      "Dispatch through Housecall Pro once scope, dates, and crew notes are final."
+    ]
+  },
+  {
+    "id": "breadline-oven-circuit",
+    "title": "Dedicated 60A oven circuit for light commercial bakery",
+    "customer": {
+      "name": "Breadline Bakery",
+      "email": "ops@breadline.example.com",
+      "phone": "(214) 555-0168",
+      "address": "611 Main Street, McKinney, TX",
+      "company": "Breadline Bakery"
+    },
+    "propertyType": "restaurant",
+    "projectType": "commercial",
+    "projectSubtype": "circuit_add",
+    "scopeDescription": "Add a dedicated oven circuit from the rear electrical room to prep line equipment with disconnect review.",
+    "blueprintIncluded": false,
+    "notes": [
+      "Equipment cut sheet still pending from vendor."
+    ],
+    "attachments": [
+      {
+        "id": "breadline-video",
+        "kind": "video",
+        "name": "breadline-oven-circuit.mov",
+        "sizeLabel": "188 MB",
+        "uploadStatus": "complete",
+        "progress": 100
+      }
+    ],
+    "transcriptSegments": [
+      {
+        "id": "breadline-seg-1",
+        "speaker": "Estimator",
+        "timestamp": "00:18",
+        "text": "This oven is sixty amp, so we have to confirm breaker and conductor size before it can be sent out."
+      }
+    ],
+    "requestedActions": [
+      {
+        "id": "oven-circuit",
+        "area": "Prep Line",
+        "label": "Install dedicated oven circuit",
+        "quantity": 1,
+        "feet": 85,
+        "amps": 60,
+        "needsMeasurement": true,
+        "keywords": [
+          "Install New 15/20a Circuit",
+          "Replace Breaker",
+          "Custom Job"
+        ]
+      }
+    ],
+    "createdAt": "2026-04-20T02:58:42.757Z",
+    "estimateDraft": {
+      "areaGroups": [
+        {
+          "area": "Prep Line",
+          "lineItems": [
+            {
+              "id": "breadline-oven-circuit-prep-line-install-dedicated-oven-circuit",
+              "area": "Prep Line",
+              "name": "Replace Breaker",
+              "description": "Replace non-working single pole breaker with new breaker up to 30 amps. (does not include GFCI/AFCI breakers)",
+              "quantity": 1,
+              "unit": "Each",
+              "materialCost": 0,
+              "sellPrice": 89,
+              "laborHours": 10.2,
+              "confidence": 0.59,
+              "status": "review_required",
+              "source": "price_book"
+            }
+          ],
+          "subtotal": 89,
+          "totalLaborHours": 10.2
+        }
+      ],
+      "lineItems": [
+        {
+          "id": "breadline-oven-circuit-prep-line-install-dedicated-oven-circuit",
+          "area": "Prep Line",
+          "name": "Replace Breaker",
+          "description": "Replace non-working single pole breaker with new breaker up to 30 amps. (does not include GFCI/AFCI breakers)",
+          "quantity": 1,
+          "unit": "Each",
+          "materialCost": 0,
+          "sellPrice": 89,
+          "laborHours": 10.2,
+          "confidence": 0.59,
+          "status": "review_required",
+          "source": "price_book"
+        }
+      ],
+      "materialTotal": 0,
+      "totalLaborHours": 10.2,
+      "laborRate": 118,
+      "grandTotal": 89,
+      "averageConfidence": 0.59,
+      "reviewStatus": "owner_review_required"
+    },
+    "proposalVariants": [
+      {
+        "style": "hcp",
+        "title": "Breadline Bakery electrical proposal",
+        "intro": "This Housecall Pro style proposal keeps the language tight and operational so your customer can approve the work quickly from any device.",
+        "bulletHighlights": [
+          "Scope organized by 1 work areas for clean review.",
+          "1 mapped line items with price-book-first matching.",
+          "No deposit required for this job. Approval can proceed directly inside Housecall Pro."
+        ],
+        "depositRequired": false,
+        "depositAmount": 0,
+        "sharePath": "/proposal/breadline-oven-circuit?style=hcp"
+      },
+      {
+        "style": "premium",
+        "title": "Breadline Bakery scope of work and investment",
+        "intro": "This premium version uses more customer-facing language and frames the work around cleanliness, coordination, and the finished outcome.",
+        "bulletHighlights": [
+          "Walkthrough findings combined with field-only review to draft the estimate.",
+          "Labor modeled at 118/hr with AI-assisted takeoff and owner review gates.",
+          "After approval, the workflow is ready to hand off to Housecall Pro for scheduling and customer communication."
+        ],
+        "depositRequired": false,
+        "depositAmount": 0,
+        "sharePath": "/proposal/breadline-oven-circuit?style=premium"
+      }
+    ],
+    "integrationSyncs": [
+      {
+        "system": "housecall-pro",
+        "status": "ready",
+        "message": "Customer and job data are ready to match or create inside Housecall Pro when the owner approves the proposal.",
+        "updatedAt": "2026-04-20T02:58:42.757Z"
+      },
+      {
+        "system": "supplier-email",
+        "status": "queued",
+        "message": "Supplier email stays queued until approval and deposit conditions are satisfied.",
+        "updatedAt": "2026-04-20T02:58:42.757Z"
+      },
+      {
+        "system": "home-depot-cart",
+        "status": "queued",
+        "message": "Retail cart generation is queued until approval so the team only buys against a won job.",
+        "updatedAt": "2026-04-20T02:58:42.757Z"
+      }
+    ],
+    "capturePrompts": [
+      {
+        "id": "oven-circuit-measurement",
+        "area": "Prep Line",
+        "question": "Confirm field dimensions in Prep Line",
+        "context": "Commercial walkthroughs prompt for fixture spacing, run length, or mounting heights when measurements are unclear. The estimator can dismiss and keep the best-guess draft.",
+        "severity": "warning",
+        "dismissible": true
+      },
+      {
+        "id": "oven-circuit-ampacity",
+        "area": "Prep Line",
+        "question": "Review 60A circuit scope before proposal send",
+        "context": "Any circuit above 40A requires explicit owner review so feeder size, breaker, and material assumptions are confirmed before pricing is finalized.",
+        "severity": "critical",
+        "dismissible": false
+      },
+      {
+        "id": "breadline-oven-circuit-prep-line-install-dedicated-oven-circuit-confidence",
+        "area": "Prep Line",
+        "question": "Manual confirmation needed for Replace Breaker",
+        "context": "Confidence dropped below the safe send threshold, so the owner review workspace should confirm quantity, match, or labor before sending.",
+        "severity": "warning",
+        "dismissible": true
+      }
+    ],
+    "analysisSummary": [
+      "Drafted 1 estimate line items across 1 areas from walkthrough scope and optional notes.",
+      "1 items matched your price book first; unmatched items stayed marked as AI fallback.",
+      "No blueprint was required for this draft, so confidence depends more heavily on walkthrough detail and review.",
+      "3 clarification prompts are ready for capture or owner review before final send."
+    ],
+    "opsNextSteps": [
+      "Owner reviews quantities, match quality, and any flagged confidence issues.",
+      "Send the selected proposal variant and route customer approval through Housecall Pro.",
+      "Queue supply-house email and Home Depot cart build after approval.",
+      "Dispatch through Housecall Pro once scope, dates, and crew notes are final."
+    ]
+  }
+]

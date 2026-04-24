@@ -1,0 +1,21 @@
+name: GrizzlyCapture
+options:
+  minimumXcodeGenVersion: 2.38.0
+targets:
+  GrizzlyCapture:
+    type: application
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - Sources/App
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.grizzlyelectrical.capture
+        SWIFT_VERSION: 5.10
+        INFOPLIST_KEY_CFBundleDisplayName: GrizzlyCapture
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.business
+        INFOPLIST_KEY_NSAppTransportSecurity_NSAllowsArbitraryLoads: true
+        INFOPLIST_KEY_NSCameraUsageDescription: Capture walkthrough video for electrical estimates.
+        INFOPLIST_KEY_NSMicrophoneUsageDescription: Record on-site voiceover during the walkthrough.
+        INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription: Save captured walkthrough video if needed.
+        TARGETED_DEVICE_FAMILY: 1
