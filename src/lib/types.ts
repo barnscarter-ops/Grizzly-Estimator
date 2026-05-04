@@ -14,9 +14,16 @@ export type PropertyType =
   | "retail"
   | "restaurant";
 
-export type AttachmentKind = "video" | "blueprint" | "note" | "photo";
+export type AttachmentKind =
+  | "video"
+  | "blueprint"
+  | "note"
+  | "photo"
+  | "section_photo"
+  | "section_audio_note"
+  | "general_attachment";
 
-export type UploadStatus = "queued" | "uploading" | "complete" | "retrying";
+export type UploadStatus = "queued" | "uploading" | "complete" | "retrying" | "failed";
 
 export type LineItemSource = "price_book" | "ai_fallback";
 
@@ -27,13 +34,36 @@ export type ProposalStyle = "hcp" | "premium";
 export type ReviewStatus = "ready_for_owner_review" | "owner_review_required";
 
 export type ProposalWorkflowStatus =
+  | "intake_draft"
   | "owner_review_pending"
   | "sent_to_customer"
   | "customer_approved";
 
+export type IntakeStatus = "draft" | "saved" | "ready_for_estimate";
+
 export type NotificationType = "owner_approval" | "customer_send";
 
 export type NotificationDeliveryState = "ready" | "queued" | "sent" | "failed";
+
+export type WalkthroughStatus =
+  | "draft"
+  | "ready_for_extraction"
+  | "extracted"
+  | "reviewed";
+
+export type WalkthroughNoteMode = "voice" | "text" | "mixed";
+
+export type WalkthroughSectionNoteMode = "voice" | "text";
+
+export type WalkthroughSectionExtractionStatus =
+  | "not_started"
+  | "pending"
+  | "complete"
+  | "failed";
+
+export type RouteType = "attic" | "crawlspace" | "exterior" | "interior" | "unknown";
+
+export type RouteClass = "home_run" | "branch_extension" | "fixture_drop" | "unknown";
 
 export interface NotificationChannelState {
   email: NotificationDeliveryState;
@@ -58,6 +88,63 @@ export interface PriceBookEntry {
   sourceLabel: string;
 }
 
+export type WorkItemSourceType =
+  | "photo"
+  | "video"
+  | "typed_notes"
+  | "note"
+  | "blueprint";
+
+export type DetectedWorkItemReviewStatus =
+  | "pending"
+  | "approved"
+  | "rejected"
+  | "edited";
+
+export type DetectedWorkItemPricingStatus =
+  | "not_ready"
+  | "ready_after_review"
+  | "blocked_missing_measurement";
+
+export interface SuggestedPriceBookMatch {
+  id: string;
+  name: string;
+  category: string;
+  sourceLabel: string;
+}
+
+export interface DetectedWorkItem {
+  id: string;
+  walkthroughId?: string;
+  sectionId?: string;
+  sectionName?: string;
+  description: string;
+  quantity: number;
+  unit?: string;
+  confidence: number;
+  sourceType: WorkItemSourceType;
+  sourceAttachmentId?: string;
+  sourceAttachmentIds?: string[];
+  sourcePath: string;
+  sourceNoteText?: string;
+  extractedMeasurements?: SectionMeasurements;
+  missingMeasurementPrompts?: string[];
+  manualReview: boolean;
+  requiresReview?: boolean;
+  reviewStatus: DetectedWorkItemReviewStatus;
+  pricingStatus?: DetectedWorkItemPricingStatus;
+  suggestedPriceBookMatch?: SuggestedPriceBookMatch;
+  extractionNotes?: string;
+  extractionRequiresConversion?: boolean;
+  detectedAt: string;
+}
+
+export interface ExtractionStatus {
+  status: "not_started" | "needs_configuration" | "partial" | "complete" | "failed";
+  message: string;
+  updatedAt: string;
+}
+
 export interface Attachment {
   id: string;
   kind: AttachmentKind;
@@ -68,6 +155,66 @@ export interface Attachment {
   previewUrl?: string;
   storageKey?: string;
   contentType?: string;
+  sizeBytes?: number;
+  uploadedAt?: string;
+  errorMessage?: string;
+  projectId?: string;
+  walkthroughId?: string;
+  sectionId?: string;
+}
+
+export interface SectionMeasurements {
+  ceilingHeightFt?: number;
+  wallLengthFt?: number;
+  roomLengthFt?: number;
+  roomWidthFt?: number;
+  notes?: string;
+}
+
+export interface Walkthrough {
+  id: string;
+  projectId: string;
+  sessionId?: string;
+  status: WalkthroughStatus;
+  noteModeDefault: WalkthroughNoteMode;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface WalkthroughSection {
+  id: string;
+  walkthroughId: string;
+  projectId: string;
+  name: string;
+  areaName: string;
+  sortOrder: number;
+  noteMode: WalkthroughSectionNoteMode;
+  photoAttachmentIds: string[];
+  audioNoteAttachmentId?: string;
+  transcript?: string;
+  typedNote?: string;
+  sectionMeasurements?: SectionMeasurements;
+  extractionStatus: WalkthroughSectionExtractionStatus;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface RouteMeasurement {
+  id: string;
+  walkthroughId: string;
+  projectId: string;
+  sourceLocation: string;
+  destinationSectionId?: string;
+  destinationDescription?: string;
+  routeType?: RouteType;
+  measuredDistanceFt?: number;
+  routeClass?: RouteClass;
+  circuitAmpRating?: number;
+  requiresMeasuredDistance: boolean;
+  requiresReview: boolean;
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface TranscriptSegment {
@@ -251,16 +398,26 @@ export interface ProjectIntakeInput {
 
 export interface ProjectRecord extends ProjectIntakeInput {
   createdAt: string;
+  updatedAt?: string;
   createdByEmail?: string;
+  intakeStatus?: IntakeStatus;
   estimateDraft: EstimateDraft;
   proposalVariants: ProposalVariant[];
   proposalWorkflow: ProposalWorkflowState;
   notificationStatus: ProjectNotificationStatus;
   ownerApprovalStatus: NotificationDeliveryStatus;
   customerSendStatus: NotificationDeliveryStatus;
+  customerProposalEmailStatus: NotificationDeliveryState;
+  customerProposalEmailLastAttemptAt?: string;
+  customerProposalEmailError?: string;
   lastNotificationAttemptAt?: string;
   integrationSyncs: IntegrationSync[];
   integrationState?: ProjectIntegrationState;
+  walkthroughs?: Walkthrough[];
+  walkthroughSections?: WalkthroughSection[];
+  routeMeasurements?: RouteMeasurement[];
+  detectedWorkItems?: DetectedWorkItem[];
+  extractionStatus?: ExtractionStatus;
   capturePrompts: CapturePrompt[];
   analysisSummary: string[];
   opsNextSteps: string[];

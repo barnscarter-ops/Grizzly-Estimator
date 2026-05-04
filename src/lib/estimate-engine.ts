@@ -18,7 +18,13 @@ const BASE_LABOR_RATE = 118;
 
 type AnalyzedProjectRecord = Omit<
   ProjectRecord,
-  "notificationStatus" | "ownerApprovalStatus" | "customerSendStatus" | "lastNotificationAttemptAt"
+  | "notificationStatus"
+  | "ownerApprovalStatus"
+  | "customerSendStatus"
+  | "customerProposalEmailStatus"
+  | "customerProposalEmailLastAttemptAt"
+  | "customerProposalEmailError"
+  | "lastNotificationAttemptAt"
 >;
 
 const FALLBACK_PRICING: Record<ProjectIntakeInput["projectSubtype"], number> = {
@@ -364,7 +370,7 @@ export function analyzeProject(
   const integrationSyncs: IntegrationSync[] = [
     {
       system: "housecall-pro",
-      status: "queued",
+      status: "ready",
       message:
         "Manual Housecall Pro handoff happens after customer approval. Direct API sync is not part of this approval workflow.",
       updatedAt: new Date().toISOString(),

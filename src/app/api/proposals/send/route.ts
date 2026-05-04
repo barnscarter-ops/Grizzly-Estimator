@@ -27,6 +27,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Project not found." }, { status: 404 });
   }
 
+  if (!project.customer.email?.trim()) {
+    return NextResponse.json(
+      { error: "Add a customer email address before sending the proposal." },
+      { status: 400 },
+    );
+  }
+
   const style = body.proposalStyle ?? project.proposalWorkflow.activeStyle;
   const preparedProject = {
     ...project,

@@ -3,9 +3,7 @@ import "server-only";
 import { createHash } from "node:crypto";
 import {
   getNotificationProviderConfigurationErrors,
-  normalizeUsPhoneNumber,
   sendResendEmail,
-  sendTwilioSms,
 } from "@/lib/notification-providers";
 import type {
   NotificationDeliveryState,
@@ -18,12 +16,24 @@ import type {
 
 type ProjectNotificationSeed = Omit<
   ProjectRecord,
-  "notificationStatus" | "ownerApprovalStatus" | "customerSendStatus" | "lastNotificationAttemptAt"
+  | "notificationStatus"
+  | "ownerApprovalStatus"
+  | "customerSendStatus"
+  | "customerProposalEmailStatus"
+  | "customerProposalEmailLastAttemptAt"
+  | "customerProposalEmailError"
+  | "lastNotificationAttemptAt"
 > &
   Partial<
     Pick<
       ProjectRecord,
-      "notificationStatus" | "ownerApprovalStatus" | "customerSendStatus" | "lastNotificationAttemptAt"
+      | "notificationStatus"
+      | "ownerApprovalStatus"
+      | "customerSendStatus"
+      | "customerProposalEmailStatus"
+      | "customerProposalEmailLastAttemptAt"
+      | "customerProposalEmailError"
+      | "lastNotificationAttemptAt"
     >
   >;
 
@@ -53,7 +63,6 @@ type NotificationChannel = "email" | "sms";
 
 type NotificationDispatchPlan = {
   email: boolean;
-  sms: boolean;
 };
 
 function nowIso() {
@@ -145,7 +154,7 @@ function withNotificationEntry(
     lastUpdatedAt: updates.lastUpdatedAt ?? nowIso(),
   };
 
-  return {
+  const nextProject = {
     ...project,
     ownerApprovalStatus:
       type === "owner_approval" ? nextEntry : project.ownerApprovalStatus,
@@ -158,6 +167,19 @@ function withNotificationEntry(
     },
     lastNotificationAttemptAt:
       updates.lastAttemptAt ?? project.lastNotificationAttemptAt,
+  };
+
+  if (type !== "customer_send") {
+    return nextProject;
+  }
+
+  return {
+    ...nextProject,
+    customerProposalEmailStatus: nextEntry.status,
+    customerProposalEmailLastAttemptAt:
+      updates.lastAttemptAt ?? project.customerProposalEmailLastAttemptAt,
+    customerProposalEmailError:
+      nextEntry.status === "failed" ? nextEntry.message : undefined,
   };
 }
 
@@ -198,7 +220,7 @@ function canSkipSend(
   const current = getNotificationEntry(project, type);
   return (
     current.lastFingerprint === fingerprint &&
-    (current.status === "queued" || current.status === "sent")
+    current.status === "sent"
   );
 }
 
@@ -209,18 +231,6 @@ function getOwnerApprovalEmails() {
       "jaime@grizzlyelectrical.net",
       "carterbarns@grizzlyelectrical.net",
     ];
-  }
-
-  return configured
-    .split(",")
-    .map((value) => value.trim())
-    .filter(Boolean);
-}
-
-function getOwnerApprovalPhones() {
-  const configured = process.env.OWNER_APPROVAL_SMS_RECIPIENTS?.trim();
-  if (!configured) {
-    return ["469-716-9870", "469-422-2982"];
   }
 
   return configured
@@ -241,14 +251,9 @@ function buildOwnerApprovalEmail(project: ProjectRecord, reviewLink: string) {
       `Estimate total: $${project.estimateDraft.grandTotal.toFixed(2)}`,
       `Summary: ${summarizeProposal(project, project.proposalWorkflow.activeStyle)}`,
       `Review link: ${reviewLink}`,
+      "",
+      "Email delivery is active now. SMS delivery is being added later.",
     ].join("\n"),
-  };
-}
-
-function buildOwnerApprovalSms(project: ProjectRecord, reviewLink: string) {
-  return {
-    to: getOwnerApprovalPhones(),
-    body: `Owner review needed for ${project.customer.name} - ${project.title}. Total $${project.estimateDraft.grandTotal.toFixed(2)}. Review: ${reviewLink}`,
   };
 }
 
@@ -266,25 +271,17 @@ function buildCustomerEmail(project: ProjectRecord, approvalLink: string) {
       `Hi ${project.customer.name},`,
       "",
       "Your estimate is ready for review and signature.",
+      "",
+      `Project: ${project.title}`,
       `Estimate total: $${project.estimateDraft.grandTotal.toFixed(2)}`,
       `Summary: ${summarizeProposal(project, project.proposalWorkflow.activeStyle)}`,
-      `Review and sign: ${approvalLink}`,
+      "",
+      "Review and approve proposal:",
+      approvalLink,
       "",
       "You can approve it directly from the proposal page with your typed signature.",
+      "Email delivery is active now. SMS delivery is being added later.",
     ].join("\n"),
-  };
-}
-
-function buildCustomerSms(project: ProjectRecord, approvalLink: string) {
-  const recipient = project.customer.phone?.trim();
-
-  if (!recipient) {
-    throw new Error("Customer phone is required before texting the proposal link.");
-  }
-
-  return {
-    to: [recipient],
-    body: `Your Grizzly Electrical estimate is ready. Total $${project.estimateDraft.grandTotal.toFixed(2)}. Review and sign here: ${approvalLink}`,
   };
 }
 
@@ -295,14 +292,29 @@ function getChannelPlan(
   force?: boolean,
 ): NotificationDispatchPlan {
   if (force || getNotificationEntry(project, type).lastFingerprint !== fingerprint) {
-    return { email: true, sms: true };
+    return { email: true };
   }
 
   const current = getNotificationEntry(project, type);
   return {
     email: current.channels?.email !== "sent",
-    sms: current.channels?.sms !== "sent",
   };
+}
+
+function getProposalNotificationBlocker(project: ProjectRecord) {
+  if (project.estimateDraft.lineItems.length === 0) {
+    return "No reviewed estimate lines are ready for proposal notifications yet.";
+  }
+
+  if (project.proposalVariants.length === 0) {
+    return "No reviewed proposal variants are ready for proposal notifications yet.";
+  }
+
+  if ((project.detectedWorkItems ?? []).some((item) => item.reviewStatus === "pending")) {
+    return "Review and approve or reject detected work items before sending proposal notifications.";
+  }
+
+  return undefined;
 }
 
 function formatChannelMessage(
@@ -314,7 +326,7 @@ function formatChannelMessage(
   const label = type === "owner_approval" ? "Owner approval" : "Customer delivery";
 
   if (failedChannels.length === 0) {
-    return `${label} sent successfully by direct email/SMS providers.`;
+    return `${label} email sent successfully. SMS delivery is disabled for now.`;
   }
 
   if (succeededChannels.length === 0) {
@@ -362,30 +374,6 @@ async function sendDirectNotification(
     }
   }
 
-  if (plan.sms) {
-    try {
-      const smsInput =
-        type === "owner_approval"
-          ? buildOwnerApprovalSms(project, reviewLink)
-          : buildCustomerSms(project, approvalLink);
-      const result = await sendTwilioSms({
-        ...smsInput,
-        to: smsInput.to.map(normalizeUsPhoneNumber),
-      });
-      channelResults.sms = `sent (${result.count} recipient${result.count === 1 ? "" : "s"})`;
-      succeededChannels.push("sms");
-    } catch (error) {
-      channelResults.sms =
-        error instanceof Error ? error.message : "Unknown SMS delivery error.";
-      failedChannels.push("sms");
-      console.error("[notifications/sms] Delivery failed", {
-        projectId: project.id,
-        type,
-        error: channelResults.sms,
-      });
-    }
-  }
-
   return {
     ok: failedChannels.length === 0,
     message: formatChannelMessage(type, channelResults, succeededChannels, failedChannels),
@@ -395,11 +383,7 @@ async function sendDirectNotification(
           ? "sent"
           : "failed"
         : resolveChannelState(getNotificationEntry(project, type).channels).email,
-      sms: plan.sms
-        ? succeededChannels.includes("sms")
-          ? "sent"
-          : "failed"
-        : resolveChannelState(getNotificationEntry(project, type).channels).sms,
+      sms: resolveChannelState(getNotificationEntry(project, type).channels).sms,
     } satisfies NotificationDeliveryStatus["channels"],
   };
 }
@@ -420,6 +404,36 @@ function maskIpAddress(value: string | undefined) {
   }
 
   return value;
+}
+
+function normalizeIntegrationSystem(value: string) {
+  return value.trim().toLowerCase().replaceAll(/\s+/g, "-");
+}
+
+function isLegacyNotificationSync(system: string) {
+  return new Set([
+    "owner-approval-email",
+    "owner-approval-text",
+    "customer-proposal-email",
+    "customer-proposal-text",
+    "approval-notification-email",
+  ]).has(normalizeIntegrationSystem(system));
+}
+
+function normalizeManualHousecallSync(sync: ProjectRecord["integrationSyncs"][number]) {
+  const normalizedSystem = normalizeIntegrationSystem(sync.system);
+  if (
+    normalizedSystem === "housecall-pro" &&
+    sync.status === "queued" &&
+    sync.message.includes("Manual Housecall Pro handoff happens after customer approval")
+  ) {
+    return {
+      ...sync,
+      status: "ready" as const,
+    };
+  }
+
+  return sync;
 }
 
 export function initializeProposalWorkflow(
@@ -446,17 +460,22 @@ export function initializeProposalWorkflow(
     customerSendStatus:
       project.customerSendStatus ??
       defaultNotificationEntry("ready", "Customer delivery has not been sent yet."),
+    customerProposalEmailStatus:
+      project.customerProposalEmailStatus ??
+      project.customerSendStatus?.status ??
+      "ready",
+    customerProposalEmailLastAttemptAt:
+      project.customerProposalEmailLastAttemptAt ??
+      project.customerSendStatus?.lastAttemptAt,
+    customerProposalEmailError:
+      project.customerProposalEmailError ??
+      (project.customerSendStatus?.status === "failed"
+        ? project.customerSendStatus.message
+        : undefined),
     lastNotificationAttemptAt: project.lastNotificationAttemptAt,
-    integrationSyncs: project.integrationSyncs.filter(
-      (sync) =>
-        ![
-          "owner-approval-email",
-          "owner-approval-text",
-          "customer-proposal-email",
-          "customer-proposal-text",
-          "approval-notification-email",
-        ].includes(sync.system),
-    ),
+    integrationSyncs: (project.integrationSyncs ?? [])
+      .filter((sync) => !isLegacyNotificationSync(sync.system))
+      .map((sync) => normalizeManualHousecallSync(sync)),
   };
 }
 
@@ -464,6 +483,16 @@ export async function queueNotification(
   input: SendNotificationInput,
 ): Promise<WorkflowResult> {
   const { project, type, origin, force } = input;
+  const blocker = getProposalNotificationBlocker(project);
+
+  if (blocker) {
+    return {
+      ok: false,
+      message: blocker,
+      project,
+    };
+  }
+
   const payload = buildNotificationPayload(project, type, origin);
   const fingerprint = buildFingerprint(
     type,
@@ -486,12 +515,12 @@ export async function queueNotification(
 
   let updatedProject = withNotificationEntry(project, type, {
     status: "queued",
-    message: "Sending direct email and SMS notifications...",
+    message: "Sending direct email notification...",
     lastAttemptAt: nowIso(),
     lastFingerprint: fingerprint,
     channels: {
       email: dispatchPlan.email ? "queued" : existingChannels.email,
-      sms: dispatchPlan.sms ? "queued" : existingChannels.sms,
+      sms: existingChannels.sms,
     },
   });
 
@@ -505,7 +534,7 @@ export async function queueNotification(
       lastFingerprint: fingerprint,
       channels: {
         email: dispatchPlan.email ? "failed" : currentChannels.email,
-        sms: dispatchPlan.sms ? "failed" : currentChannels.sms,
+        sms: currentChannels.sms,
       },
     });
     console.error("[notifications] Provider configuration error", {
@@ -588,9 +617,7 @@ export async function queueNotification(
         email: dispatchPlan.email
           ? "failed"
           : resolveChannelState(getNotificationEntry(updatedProject, type).channels).email,
-        sms: dispatchPlan.sms
-          ? "failed"
-          : resolveChannelState(getNotificationEntry(updatedProject, type).channels).sms,
+        sms: resolveChannelState(getNotificationEntry(updatedProject, type).channels).sms,
       },
     });
 
@@ -608,7 +635,7 @@ export function canResendNotification(
   manualOverride?: boolean,
 ) {
   const current = getNotificationEntry(project, type);
-  return manualOverride || current.status === "failed";
+  return manualOverride || current.status === "failed" || current.status === "queued";
 }
 
 export async function sendOwnerApprovalRequest(

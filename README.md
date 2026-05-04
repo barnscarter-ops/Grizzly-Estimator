@@ -43,13 +43,9 @@ SUPABASE_PROJECTS_TABLE="app_projects"
 SUPABASE_SESSIONS_TABLE="app_sessions"
 SUPABASE_UPLOADS_BUCKET="project-attachments"
 OWNER_APPROVAL_EMAIL_RECIPIENTS="jaime@grizzlyelectrical.net,carterbarns@grizzlyelectrical.net"
-OWNER_APPROVAL_SMS_RECIPIENTS="469-716-9870,469-422-2982"
 RESEND_API_KEY="re_xxxxxxxxx"
 RESEND_FROM_EMAIL="Grizzly Estimator <notifications@grizzlyelectrical.net>"
-TWILIO_ACCOUNT_SID="ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-TWILIO_AUTH_TOKEN="your-twilio-auth-token"
-TWILIO_PHONE_NUMBER="+14690000000"
-PRICE_BOOK_PATH="C:\\Users\\carte\\OneDrive\\Documents\\Grizzly\\Price Lists\\2026 Price Book.csv"
+PRICE_BOOK_PATH="C:\\Users\\carte\\Documents\\Grizzly Business Documents\\2026 Price Book.csv"
 HCP_API_KEY="your-housecall-pro-api-key"
 HCP_API_BASE_URL="https://api.housecallpro.com/public/v1"
 HCP_AUTH_SCHEME="Bearer"
@@ -95,23 +91,43 @@ npm run build
 npm run migrate:local-data
 ```
 
+## Intake/capture testing checklist
+
+Run these on a signed-in phone browser before using estimator generation:
+
+- Create a new intake session with customer, job address, scope, and typed notes.
+- Save the intake, refresh the page, and confirm the typed intake is still available.
+- Start `Walkthrough`, choose speak or type notes, and save at least one section.
+- Add section photos from the phone camera.
+- Add section photos from the phone photo library.
+- Upload an iPhone HEIC/HEIF photo from the camera or photo library.
+- Add multiple photos to one walkthrough section and confirm they stay grouped.
+- Add a second walkthrough section and confirm its photos stay separate.
+- Add optional secondary reference videos only when they are not part of section capture.
+- Replace one saved secondary photo and one saved secondary video.
+- Replace a saved HEIC/HEIF photo.
+- Remove one saved secondary photo and one saved secondary video.
+- Remove a saved HEIC/HEIF photo.
+- Try an unsupported file type and confirm a clear error appears.
+- Try a large video on weak signal and confirm upload progress, failure, and retry behavior are visible.
+- Confirm saved media rows include storage keys in the intake review and remain after refresh.
+- Confirm a saved HEIC/HEIF photo remains attached after refresh.
+- Confirm no estimate, proposal, PDF, or customer delivery action runs from the intake screen.
+
 ## Notes
 
 - New projects are saved to the protected Supabase project table so proposal links keep working across reloads.
 - Uploaded walkthroughs, blueprints, photos, and notes are stored in a private Supabase Storage bucket and served back only to authenticated workspace sessions.
 - New estimate drafts send direct owner approval notifications.
 - Owner approval happens inside the workspace by sending the selected proposal to the customer.
-- Customer delivery sends direct customer email plus customer SMS.
-- Notification delivery uses:
-  - Resend for email
-  - Twilio for SMS
+- Customer delivery sends direct customer email.
+- Notification delivery currently uses Resend for email only.
 - Owner approval sends to:
   - `jaime@grizzlyelectrical.net`
   - `carterbarns@grizzlyelectrical.net`
-  - `469-716-9870`
-  - `469-422-2982`
-- `OWNER_APPROVAL_EMAIL_RECIPIENTS` and `OWNER_APPROVAL_SMS_RECIPIENTS` can still override those defaults if needed later.
+- `OWNER_APPROVAL_EMAIL_RECIPIENTS` can still override those defaults if needed later.
 - Notification statuses remain `queued`, `sent`, and `failed`, and the resend endpoint only allows retry after failure unless manually overridden.
+- SMS delivery is intentionally deferred for now and is not presented as complete.
 - Customers approve from the signed proposal link with a typed signature.
 - The Housecall Pro sync layer now reuses verified customer matches, remembers remote IDs in project state, and stops when a changed estimate/job would create a duplicate by default.
 - Re-running the same sync is replay-safe for already-exported estimates and jobs because the app rechecks stored remote IDs and fingerprints before creating anything new.
@@ -120,6 +136,5 @@ npm run migrate:local-data
 - The web app is intentionally human-in-the-loop. Commercial measurement prompts and `>40A` ampacity review gates are enforced in the estimate engine.
 - Direct notification setup:
   1. Add a verified sending identity in Resend and set `RESEND_FROM_EMAIL`.
-  2. Add your Twilio account SID, auth token, and sending phone number.
-  3. Make sure customer records include both email and phone before sending.
-  4. Use the workspace resend control if either email or SMS fails.
+  2. Make sure customer records include an email address before sending.
+  3. Use the workspace resend control if email delivery fails.

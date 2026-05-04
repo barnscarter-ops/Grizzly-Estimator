@@ -6,7 +6,7 @@ import type { PriceBookEntry } from "@/lib/types";
 
 const DEFAULT_PRICE_BOOK_PATH =
   process.env.PRICE_BOOK_PATH ??
-  "C:\\Users\\carte\\OneDrive\\Documents\\Grizzly\\Price Lists\\2026 Price Book.csv";
+  "C:\\Users\\carte\\Documents\\Grizzly Business Documents\\2026 Price Book.csv";
 
 const FALLBACK_PRICE_BOOK: PriceBookEntry[] = [
   {

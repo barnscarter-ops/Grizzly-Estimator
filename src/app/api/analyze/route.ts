@@ -1,36 +1,90 @@
 import { NextResponse } from "next/server";
 import { requireApiSession } from "@/lib/auth";
-import { analyzeProject } from "@/lib/estimate-engine";
-import { upsertProject } from "@/lib/local-store";
+import { getProjectById, upsertProject } from "@/lib/local-store";
 import { getPriceBookEntries } from "@/lib/price-book";
-import {
-  initializeProposalWorkflow,
-  sendOwnerApprovalRequest,
-} from "@/lib/proposal-workflow";
-import type { ProjectIntakeInput } from "@/lib/types";
+import { extractDetectedWorkItems } from "@/lib/work-item-extraction";
+
+type AnalyzeRequest = {
+  projectId?: string;
+};
 
 export async function POST(request: Request) {
-  const { response, session } = await requireApiSession();
+  const { response } = await requireApiSession();
 
   if (response) {
     return response;
   }
 
-  const body = (await request.json()) as ProjectIntakeInput;
+  const body = (await request.json().catch(() => ({}))) as AnalyzeRequest;
+
+  if (!body.projectId) {
+    return NextResponse.json(
+      { error: "Save an intake session before running extraction." },
+      { status: 400 },
+    );
+  }
+
+  const project = await getProjectById(body.projectId);
+
+  if (!project) {
+    return NextResponse.json({ error: "Intake session not found." }, { status: 404 });
+  }
+
   const priceBook = await getPriceBookEntries();
-  let project = initializeProposalWorkflow(
-    analyzeProject(body, priceBook),
-    session?.email,
+  const extraction = await extractDetectedWorkItems(project, priceBook);
+  const sectionIdsWithItems = new Set(
+    extraction.items
+      .map((item) => item.sectionId)
+      .filter((sectionId): sectionId is string => Boolean(sectionId)),
   );
-
-  await upsertProject(project);
-
-  const ownerNotification = await sendOwnerApprovalRequest(
-    project,
-    new URL(request.url).origin,
+  const updatedWalkthroughSections = project.walkthroughSections?.map((section) =>
+    sectionIdsWithItems.has(section.id)
+      ? {
+          ...section,
+          extractionStatus: "complete" as const,
+          updatedAt: extraction.status.updatedAt,
+        }
+      : section,
   );
-  project = ownerNotification.project;
-  await upsertProject(project);
+  const walkthroughIdsWithItems = new Set(
+    extraction.items
+      .map((item) => item.walkthroughId)
+      .filter((walkthroughId): walkthroughId is string => Boolean(walkthroughId)),
+  );
+  const updatedWalkthroughs = project.walkthroughs?.map((walkthrough) =>
+    walkthroughIdsWithItems.has(walkthrough.id)
+      ? {
+          ...walkthrough,
+          status: "extracted" as const,
+          updatedAt: extraction.status.updatedAt,
+        }
+      : walkthrough,
+  );
+  const sectionCount = sectionIdsWithItems.size;
+  const updatedProject = {
+    ...project,
+    detectedWorkItems: extraction.items,
+    extractionStatus: extraction.status,
+    intakeStatus: "ready_for_estimate" as const,
+    updatedAt: extraction.status.updatedAt,
+    walkthroughs: updatedWalkthroughs ?? project.walkthroughs,
+    walkthroughSections: updatedWalkthroughSections ?? project.walkthroughSections,
+    estimateDraft: project.estimateDraft,
+    proposalVariants: project.proposalVariants,
+    analysisSummary: [
+      sectionCount > 0
+        ? `${extraction.items.length} detected work item${
+            extraction.items.length === 1 ? "" : "s"
+          } ready for review across ${sectionCount} walkthrough section${
+            sectionCount === 1 ? "" : "s"
+          }.`
+        : `${extraction.items.length} detected work item${
+            extraction.items.length === 1 ? "" : "s"
+          } ready for review.`,
+      "Estimate pricing and proposal generation remain blocked until human review approves scope.",
+    ],
+  };
 
-  return NextResponse.json(project);
+  const savedProject = await upsertProject(updatedProject);
+  return NextResponse.json(savedProject);
 }

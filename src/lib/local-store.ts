@@ -40,7 +40,7 @@ function serializeProject(project: ProjectRecord) {
     id: project.id,
     payload: withoutSecureProposalLinks(project) as unknown as AppProjectRow["payload"],
     created_at: normalizeProjectTimestamp(project.createdAt),
-    updated_at: new Date().toISOString(),
+    updated_at: normalizeProjectTimestamp(project.updatedAt),
   } satisfies AppProjectRow;
 }
 

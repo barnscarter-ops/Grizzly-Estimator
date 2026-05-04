@@ -71,6 +71,16 @@ export async function readStoredUpload(storageKeySegments: string[]) {
   };
 }
 
+export async function deleteStoredUpload(storageKey: string) {
+  const supabase = getSupabaseAdmin();
+  const bucket = getUploadsBucketName();
+  const { error } = await supabase.storage.from(bucket).remove([storageKey]);
+
+  if (error) {
+    throw new Error(`Failed to delete upload ${storageKey}: ${error.message}`);
+  }
+}
+
 export async function createSignedUploadAccessUrl(storageKey: string, expiresInSeconds = 3600) {
   const supabase = getSupabaseAdmin();
   const bucket = getUploadsBucketName();
