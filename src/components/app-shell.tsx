@@ -641,6 +641,27 @@ export default function AppShell({
     }
   }
 
+  async function uploadSectionPhotoFiles(
+    files: FileList | null,
+    section: WalkthroughSection,
+  ) {
+    const nextFiles = Array.from(files ?? []);
+
+    if (!activeWalkthrough || nextFiles.length === 0) {
+      return;
+    }
+
+    setWalkthroughMessage("");
+
+    for (const file of nextFiles) {
+      await uploadAttachment(file, "section_photo", undefined, {
+        walkthroughId: activeWalkthrough.id,
+        sectionId: section.id,
+        successMessage: `Photo saved to ${section.areaName}.`,
+      });
+    }
+  }
+
   function startWalkthroughCapture() {
     if (!selectedProject) {
       setWalkthroughMessage("Save or select an intake before starting a walkthrough.");
@@ -942,11 +963,29 @@ export default function AppShell({
     const file = event.target.files?.[0];
     event.target.value = "";
 
-    if (!file || (attachment.kind !== "photo" && attachment.kind !== "video")) {
+    if (
+      !file ||
+      (attachment.kind !== "photo" &&
+        attachment.kind !== "video" &&
+        attachment.kind !== "section_photo")
+    ) {
       return;
     }
 
-    await uploadAttachment(file, attachment.kind, attachment.id);
+    await uploadAttachment(
+      file,
+      attachment.kind,
+      attachment.id,
+      attachment.kind === "section_photo" &&
+        attachment.walkthroughId &&
+        attachment.sectionId
+        ? {
+            walkthroughId: attachment.walkthroughId,
+            sectionId: attachment.sectionId,
+            successMessage: "Section photo replaced.",
+          }
+        : undefined,
+    );
   }
 
   async function removeAttachment(attachment: Attachment) {
@@ -1510,13 +1549,16 @@ export default function AppShell({
                               >
                                 {statusLabel(attachment.uploadStatus)}
                               </span>
-                              {attachment.kind === "photo" || attachment.kind === "video" ? (
+                              {attachment.kind === "photo" ||
+                              attachment.kind === "video" ||
+                              attachment.kind === "section_photo" ? (
                                 <label className="rounded-full border border-black/10 bg-white px-3 py-1 text-[10px] uppercase tracking-[0.16em] text-[#5d5047]">
                                   Replace
                                   <input
                                     type="file"
                                     accept={
-                                      attachment.kind === "photo"
+                                      attachment.kind === "photo" ||
+                                      attachment.kind === "section_photo"
                                         ? PHOTO_UPLOAD_ACCEPT
                                         : "video/*"
                                     }
@@ -2085,6 +2127,21 @@ export default function AppShell({
                               ))}
                             </div>
                           ) : null}
+                          <div className="mt-3 flex flex-wrap items-center gap-2">
+                            <label className="rounded-full border border-black/10 bg-white px-3 py-1.5 text-[10px] uppercase tracking-[0.16em] text-[#5d5047] transition hover:border-black/20">
+                              Add photos
+                              <input
+                                type="file"
+                                accept={PHOTO_UPLOAD_ACCEPT}
+                                multiple
+                                onChange={(event) => {
+                                  uploadSectionPhotoFiles(event.target.files, section);
+                                  event.target.value = "";
+                                }}
+                                className="hidden"
+                              />
+                            </label>
+                          </div>
                         </div>
                       );
                     })}
