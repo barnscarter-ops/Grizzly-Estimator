@@ -1,0 +1,12 @@
+{
+  "name": "gbp",
+  "version": "0.0.1",
+  "description": "[TODO: Describe what this plugin does]",
+  "author": "[TODO: Author]",
+  "license": "[TODO: License]",
+  "homepage": "[TODO: Project URL]",
+  "interface": {
+    "displayName": "GBP",
+    "description": "[TODO: User-facing summary]"
+  }
+}
